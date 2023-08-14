@@ -1,0 +1,25 @@
+<ul class="nav nav-tabs mb-3 justify-content-between">
+  <li>
+    <a
+      class="nav-link"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      aria-current="page"
+      routerLink="/home"
+      >Inicio</a
+    >
+  </li>
+  <div class="d-flex flex-row">
+    <li *ngFor="let page of pages" class="nav-item">
+      <a
+        *ngIf="page.name !== 'Inicio'"
+        class="nav-link"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        aria-current="page"
+        routerLink="{{ page.url }}"
+        >{{ page.name }}</a
+      >
+    </li>
+  </div>
+</ul>
