@@ -1,8 +1,8 @@
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 export const getDecodedAccessToken = (token: string): any => {
   try {
-    return jwt_decode(token);
+    return jwtDecode(token);
   } catch (Error) {
     return null;
   }
