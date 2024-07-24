@@ -1,83 +1,72 @@
-<h1 class="text-center">Bienvenido a Medial Center</h1>
-<br />
-<br />
-<hr />
-<div class="row mb-2">
-  <h4>Historial de Citas</h4>
-</div>
+<div>
+  <h1 class="text-center text-primary">Bienvenido a Blue Medical</h1>
+  <hr />
+  <div class="row mb-4">
+    <h4 class="text-secondary">Historial de Citas</h4>
+  </div>
 
-<div
-  *ngIf="roles[0].role === 'patient'"
-  class="row d-flex align-items-end border rounded"
->
-  <div class="tableFixHead">
-    <table class="table table-hover table-striped w-100">
-      <thead>
-        <th>Doctor</th>
-        <th>Fecha Solicitud</th>
-        <th>Fecha Cita</th>
-        <th>Descripción</th>
-        <th>Estado Solicitud</th>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of appointments; index as i">
-          <td>
-            {{ item.doctor.name }}
-          </td>
-          <td>
-            {{ item.currentDate }}
-          </td>
-          <td>
-            {{ item.appointmentDate }}
-          </td>
-          <td>
-            {{ item.description }}
-          </td>
-          <td>
-            {{ item.state ? "Resuelta" : "Pendiente" }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div *ngIf="roles[0].role === 'patient'" class="row d-flex align-items-end border rounded mb-4 bg-white shadow-sm p-3">
+    <div class="table-responsive">
+      <table class="table table-hover table-striped w-100">
+        <thead class="table-primary">
+          <tr>
+            <th>Doctor</th>
+            <th>Fecha Solicitud</th>
+            <th>Fecha Cita</th>
+            <th>Descripción</th>
+            <th>Estado Solicitud</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of appointments; index as i">
+            <td>{{ item.doctor.name }}</td>
+            <td>{{ item.currentDate }}</td>
+            <td>{{ item.appointmentDate }}</td>
+            <td>{{ item.description }}</td>
+            <td>
+              <span [ngClass]="item.state ? 'badge bg-success' : 'badge bg-warning'">
+                {{ item.state ? "Resuelta" : "Pendiente" }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div *ngIf="roles[0].role === 'doctor'" class="row d-flex align-items-end border rounded mb-4 bg-white shadow-sm p-3">
+    <div class="table-responsive">
+      <table class="table table-hover table-striped w-100">
+        <thead class="table-primary">
+          <tr>
+            <th></th>
+            <th>Paciente</th>
+            <th>Fecha Solicitud</th>
+            <th>Fecha Cita</th>
+            <th>Descripción</th>
+            <th>Estado Solicitud</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of appointments; index as i">
+            <td>
+              <a routerLink="/home/resolved/appointments" *ngIf="!item.state" class="btn btn-sm btn-primary">
+                Ver solicitud
+              </a>
+            </td>
+            <td>{{ item.patient.name }} {{ item.patient.lastName }}</td>
+            <td>{{ item.currentDate }}</td>
+            <td>{{ item.appointmentDate }}</td>
+            <td>{{ item.description }}</td>
+            <td>
+              <span [ngClass]="item.state ? 'badge bg-success' : 'badge bg-warning'">
+                {{ item.state ? "Resuelta" : "Pendiente" }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 
-<div
-  *ngIf="roles[0].role === 'doctor'"
-  class="row d-flex align-items-end border rounded"
->
-  <div class="tableFixHead">
-    <table class="table table-hover table-striped w-100">
-      <thead>
-        <th></th>
-        <th>Paciente</th>
-        <th>Fecha Solicitud</th>
-        <th>Fecha Cita</th>
-        <th>Descripción</th>
-        <th>Estado Solicitud</th>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of appointments; index as i">
-          <td>
-            <a routerLink="/home/resolved/appointments" *ngIf="!item.state" class="btn btn-sm btn-primary">
-              ver solicitud
-            </a>
-          </td>
-          <td>{{ item.patient.name }} {{ item.patient.lastName }}</td>
-          <td>
-            {{ item.currentDate }}
-          </td>
-          <td>
-            {{ item.appointmentDate }}
-          </td>
-          <td>
-            {{ item.description }}
-          </td>
-          <td>
-            {{ item.state ? "Resuelta" : "Pendiente" }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>

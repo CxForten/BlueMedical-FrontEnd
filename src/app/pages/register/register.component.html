@@ -1,131 +1,132 @@
 <div class="box-flex">
   <div class="d-flex justify-content-center align-items-center h-100">
-    <div class="col-12 col-md-4 col-lg-3 py-3 px-5">
+    <div class="col-12 col-md-6 col-lg-4 py-4 px-5 shadow rounded bg-white">
+      <div class="text-center mb-4">
+        <h1 class="text-primary">Blue Medical</h1>
+        <p class="text-muted">Crear una nueva cuenta</p>
+      </div>
       <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
         <div class="row mb-3">
           <div class="col-12">
             <a routerLink="/login" class="nav-link">
-              <i class="bi bi-arrow-left-circle h5"></i>
+              <i class="bi bi-arrow-left-circle h5 text-primary"></i>
             </a>
           </div>
         </div>
 
-        <div class="row mb-2">
-          <div class="col-12">
-            <label class="form-label">Nombre de Usuario:</label>
+        <div class="form-group mb-3">
+          <label class="form-label">Nombre de Usuario:</label>
+          <input
+            type="text"
+            [ngClass]="
+              nameField?.errors && nameField?.touched
+                ? 'is-invalid form-control'
+                : 'form-control'
+            "
+            formControlName="name"
+            placeholder="Ingrese su nombre de usuario"
+          />
+          <div
+            *ngIf="nameField?.errors && nameField?.touched"
+            class="text-danger m-1"
+          >
+            <small *ngIf="nameField?.hasError('required')">
+              El usuario es requerido
+            </small>
+            <small *ngIf="nameField?.hasError('minlength')">
+              Mínimo 4 caracteres
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label class="form-label">Email:</label>
+          <input
+            type="text"
+            [ngClass]="
+              emailField?.errors && emailField?.touched
+                ? 'is-invalid form-control'
+                : 'form-control'
+            "
+            formControlName="email"
+            placeholder="Ingrese su email"
+          />
+          <div
+            *ngIf="emailField?.errors && emailField?.touched"
+            class="text-danger m-1"
+          >
+            <small *ngIf="emailField?.hasError('required')">
+              El email es requerido
+            </small>
+            <small *ngIf="emailField?.hasError('email')">El email no es válido</small>
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label class="form-label">Contraseña:</label>
+          <div class="input-group">
             <input
-              type="text"
+              [type]="isShowPassword ? 'text' : 'password'"
               [ngClass]="
-                nameField?.errors && nameField?.touched
+                passwordField?.errors && passwordField?.touched
                   ? 'is-invalid form-control'
                   : 'form-control'
               "
-              formControlName="name"
+              formControlName="password"
+              placeholder="Ingrese su contraseña"
             />
-            <div
-              *ngIf="nameField?.errors && nameField?.touched"
-              class="text-danger"
-            >
-              <p *ngIf="nameField?.hasError('required')">
-                El usuario es requerido
-              </p>
-              <p *ngIf="nameField?.hasError('minlength')">
-                Mínimo 4 caracteres
-              </p>
-            </div>
+            <span class="input-group-text bg-light border-0">
+              <ng-template [ngIf]="isShowPassword" [ngIfElse]="eyes">
+                <i
+                  class="bi bi-eye cursor-pointer"
+                  (click)="setIsShowPassword()"
+                ></i>
+              </ng-template>
+              <ng-template #eyes>
+                <i
+                  class="bi bi-eye-slash cursor-pointer"
+                  (click)="setIsShowPassword()"
+                ></i>
+              </ng-template>
+            </span>
+          </div>
+          <div
+            *ngIf="passwordField?.errors && passwordField?.touched"
+            class="text-danger m-1"
+          >
+            <small *ngIf="passwordField?.hasError('required')">
+              La contraseña es requerida
+            </small>
+            <small *ngIf="passwordField?.hasError('minlength')">
+              Mínimo 8 caracteres
+            </small>
           </div>
         </div>
 
-        <div class="row mb-2">
-          <div class="col-12">
-            <label class="form-label">Email:</label>
-            <input
-              type="text"
-              [ngClass]="
-                emailField?.errors && emailField?.touched
-                  ? 'is-invalid form-control'
-                  : 'form-control'
-              "
-              formControlName="email"
-            />
-            <div
-              *ngIf="emailField?.errors && emailField?.touched"
-              class="text-danger m-1"
-            >
-              <p *ngIf="emailField?.hasError('required')">
-                El email es requerido
-              </p>
-              <p *ngIf="emailField?.hasError('email')">El email no es valido</p>
+          <div class="row mb-3">
+            <div class="col-12">
+              <ng-template *ngIf="isLoading$ | async; else loaderButton">
+                <button
+                  class="btn btn-secondary w-100 shadow"
+                  type="button"
+                  disabled
+                >
+                  <span role="status">Cargando...</span>
+                  <span
+                    class="spinner-grow spinner-grow-sm ms-2"
+                    aria-hidden="true"
+                  ></span>
+                </button>
+              </ng-template>
+              <ng-template #loaderButton>
+                <button type="submit" class="btn btn-primary w-100 shadow">
+                  Crear
+                  <i class="bi bi-person-add"></i>
+                </button>
+              </ng-template>
             </div>
           </div>
-        </div>
-
-        <div class="row mb-2">
-          <div class="col-12">
-            <label class="form-label">Password:</label>
-            <div class="input-group mb-3">
-              <input
-                [type]="isShowPassword ? 'text' : 'password'"
-                [ngClass]="
-                  passwordField?.errors && passwordField?.touched
-                    ? 'is-invalid form-control'
-                    : 'form-control'
-                "
-                formControlName="password"
-              />
-              <span class="input-group-text" id="basic-addon2">
-                <ng-template [ngIf]="isShowPassword" [ngIfElse]="eyes">
-                  <i
-                    class="bi bi-eye cursor-pointer"
-                    (click)="setIsShowPassword()"
-                  ></i>
-                </ng-template>
-                <ng-template #eyes>
-                  <i
-                    class="bi bi-eye-slash cursor-pointer"
-                    (click)="setIsShowPassword()"
-                  ></i>
-                </ng-template>
-              </span>
-            </div>
-            <div
-              *ngIf="passwordField?.errors && passwordField?.touched"
-              class="text-danger m-1"
-            >
-              <p *ngIf="passwordField?.hasError('required')">
-                La contraseña es requerida
-              </p>
-              <p *ngIf="passwordField?.hasError('minlength')">
-                Mínimo 8 caracteres
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <div class="col-12">
-            <ng-template *ngIf="isLoading$ | async; else loaderButton">
-              <button
-                class="btn btn-secondary w-100 shadow"
-                type="button"
-                disabled
-              >
-                <span role="status">Cargando...</span>
-                <span
-                  class="spinner-grow spinner-grow-sm ms-2"
-                  aria-hidden="true"
-                ></span>
-              </button>
-            </ng-template>
-            <ng-template #loaderButton>
-              <button type="submit" class="btn btn-primary w-100 shadow">
-                Crear
-                <i class="bi bi-person-add"></i>
-              </button>
-            </ng-template>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
-</div>

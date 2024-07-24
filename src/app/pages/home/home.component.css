@@ -1,0 +1,43 @@
+.container-lg {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 2rem;
+  }
+  .bg-light {
+    background-color: #f8f9fa !important;
+  }
+  .shadow {
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  }
+  .border {
+    border-color: #007bff !important;
+  }
+  .box-content {
+    margin-top: 2rem;
+  }
+  my-header {
+    display:block;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007bff;
+    color: white;
+    padding: 1rem;
+    border-radius: 10px;
+  }
+  my-navbar {
+    margin-top: 1rem;
+  }
+  .px-4 {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+  .py-4 {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+  .mb-3 {
+    margin-bottom: 1rem !important;
+  }
+  .m-0 {
+    margin: 0 !important;
+  }

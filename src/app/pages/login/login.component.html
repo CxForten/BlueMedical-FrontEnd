@@ -1,106 +1,104 @@
 <div class="box-flex">
   <div class="d-flex justify-content-center align-items-center h-100">
     <div class="col-12 col-md-4 col-lg-3 py-3 px-5">
+      <div class="text-center mb-4">
+        <h1 class="text-primary">Blue Medical</h1>
+        <p class="text-muted">Bienvenido, por favor inicie sesión</p>
+      </div>
       <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
 
-        <div class="row mb-2">
-          <div class="col-12">
-            <label class="form-label">Email:</label>
+        <div class="form-group mb-3">
+          <label class="form-label">Email:</label>
+          <input
+            type="text"
+            [ngClass]="
+              emailField?.errors && emailField?.touched
+                ? 'is-invalid form-control'
+                : 'form-control'
+            "
+            formControlName="email"
+            placeholder="Ingrese su email"
+          />
+          <div
+            *ngIf="emailField?.errors && emailField?.touched"
+            class="text-danger m-1"
+          >
+            <small *ngIf="emailField?.hasError('required')">
+              El email es requerido
+            </small>
+            <small *ngIf="emailField?.hasError('email')">El email no es válido</small>
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label class="form-label">Contraseña:</label>
+          <div class="input-group">
             <input
-              type="text"
+              [type]="isShowPassword ? 'text' : 'password'"
               [ngClass]="
-                emailField?.errors && emailField?.touched
+                passwordField?.errors && passwordField?.touched
                   ? 'is-invalid form-control'
                   : 'form-control'
               "
-              formControlName="email"
+              formControlName="password"
+              placeholder="Ingrese su contraseña"
             />
-            <div
-              *ngIf="emailField?.errors && emailField?.touched"
-              class="text-danger m-1"
-            >
-              <p *ngIf="emailField?.hasError('required')">
-                El email es requerido
-              </p>
-              <p *ngIf="emailField?.hasError('email')">El email no es valido</p>
-            </div>
+            <span class="input-group-text bg-light border-0">
+              <ng-template [ngIf]="isShowPassword" [ngIfElse]="eyes">
+                <i
+                  class="bi bi-eye cursor-pointer"
+                  (click)="setIsShowPassword()"
+                ></i>
+              </ng-template>
+              <ng-template #eyes>
+                <i
+                  class="bi bi-eye-slash cursor-pointer"
+                  (click)="setIsShowPassword()"
+                ></i>
+              </ng-template>
+            </span>
+          </div>
+          <div
+            *ngIf="passwordField?.errors && passwordField?.touched"
+            class="text-danger m-1"
+          >
+            <small *ngIf="passwordField?.hasError('required')">
+              La contraseña es requerida
+            </small>
+            <small *ngIf="passwordField?.hasError('minlength')">
+              Mínimo 8 caracteres
+            </small>
           </div>
         </div>
 
-        <div class="row mb-3">
-          <div class="col-12">
-            <label class="form-label">Password:</label>
-            <div class="input-group">
-              <input
-                [type]="isShowPassword ? 'text' : 'password'"
-                [ngClass]="
-                  passwordField?.errors && passwordField?.touched
-                    ? 'is-invalid form-control'
-                    : 'form-control'
-                "
-                formControlName="password"
-              />
-              <span class="input-group-text" id="basic-addon2">
-                <ng-template [ngIf]="isShowPassword" [ngIfElse]="eyes">
-                  <i
-                    class="bi bi-eye cursor-pointer"
-                    (click)="setIsShowPassword()"
-                  ></i>
-                </ng-template>
-                <ng-template #eyes>
-                  <i
-                    class="bi bi-eye-slash cursor-pointer"
-                    (click)="setIsShowPassword()"
-                  ></i>
-                </ng-template>
-              </span>
-            </div>
-            <div
-              *ngIf="passwordField?.errors && passwordField?.touched"
-              class="text-danger mx-1"
+        <div class="form-group mb-4">
+          <ng-template [ngIf]="!loader" [ngIfElse]="loaderButton">
+            <button type="submit" class="btn btn-primary w-100 shadow-sm">
+              Iniciar Sesión
+              <i class="bi bi-box-arrow-in-right"></i>
+            </button>
+          </ng-template>
+          <ng-template #loaderButton>
+            <button
+              class="btn btn-secondary w-100 shadow-sm"
+              type="button"
+              disabled
             >
-              <p *ngIf="passwordField?.hasError('required')">
-                La contraseña es requerida
-              </p>
-              <p *ngIf="passwordField?.hasError('minlength')">
-                Mínimo 8 caracteres
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="row mb-4">
-          <div class="col-12">
-            <ng-template [ngIf]="!loader" [ngIfElse]="loaderButton">
-              <button type="submit" class="btn btn-primary w-100 shadow">
-                Iniciar Sesión
-                <i class="bi bi-box-arrow-in-right"></i>
-              </button>
-            </ng-template>
-            <ng-template #loaderButton>
-              <button
-                class="btn btn-secondary w-100 shadow"
-                type="button"
-                disabled
-              >
-                <span role="status">Cargando...</span>
-                <span
-                  class="spinner-grow spinner-grow-sm ms-2"
-                  aria-hidden="true"
-                ></span>
-              </button>
-            </ng-template>
-          </div>
+              <span role="status">Cargando...</span>
+              <span
+                class="spinner-grow spinner-grow-sm ms-2"
+                aria-hidden="true"
+              ></span>
+            </button>
+          </ng-template>
         </div>
 
         <hr />
 
-        <div class="row mb-2">
-          <div class="col-12 text-center">
-            <a routerLink="/register" class="btn btn-sm btn-secondary fst-italic">
-              Crear cuenta
-            </a>
-          </div>
+        <div class="text-center">
+          <a routerLink="/register" class="btn btn-sm btn-outline-primary fst-italic">
+            Crear cuenta
+          </a>
         </div>
       </form>
     </div>
